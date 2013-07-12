@@ -8,5 +8,8 @@
   },
   "repository": "",
   "author": "Howard Tyson",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "redis": "~0.8.4"
+  }
 }
