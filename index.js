@@ -25,6 +25,18 @@ Task.prototype.save = function(done) {
     });
   })
 }
+Task.prototype.load = function(id, done) {
+  var self = this;
+  data = client.hmget('task:' + id, function(error, data) {
+    if (error) {
+      throw new Error()
+    }
+    for (i in data) {
+      self[i] = data[i];
+    }
+    done(self);
+  });
+}
 Task.prototype.addTag = function(tag) {
   this.tags.push(tag);
 }
