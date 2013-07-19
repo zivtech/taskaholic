@@ -27,14 +27,14 @@ Task.prototype.save = function(done) {
 }
 Task.prototype.load = function(id, done) {
   var self = this;
-  data = client.hmget('task:' + id, function(error, data) {
+  data = client.hgetall('task:' + id, function(error, data) {
     if (error) {
-      throw new Error()
+      done(error);
     }
     for (i in data) {
       self[i] = data[i];
     }
-    done(self);
+    done(error, self);
   });
 }
 Task.prototype.addTag = function(tag) {
@@ -46,4 +46,11 @@ item.addTag('sports');
 item.addTag('news');
 item.save(function() {
   console.log('This item was SAVED yo!');
+});
+var item2 = new Task();
+item2.load(1, function(error) {
+  if (error) {
+    console.log(error);
+  }
+  console.log(item2);
 });
