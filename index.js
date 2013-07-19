@@ -34,23 +34,54 @@ Task.prototype.load = function(id, done) {
     for (i in data) {
       self[i] = data[i];
     }
+    self.tags = self.tags.split(',');
     done(error, self);
   });
 }
 Task.prototype.addTag = function(tag) {
   this.tags.push(tag);
 }
+Task.prototype.delete = function(done) {
+  var self = this;
+  if (!self.id) {
+    throw new Error('Tasks must have an id set to be deleted');
+  }
+  // Do a fresh load to ensure that we have all of the relevant data loaded.
+  self.load(self.id, function(error) {
+    if (error) {
+      return done(error);
+    }
+    var multi = client.multi();
+    var removedTags = [];
+    for (i in self.tags) {
+      var tag = self.tags[i];
+      multi.srem('tasks:tag:' + tag, self.id);
+      removedTags.push(tag);
+    }
+    multi.srem('task', self.id);
+    multi.del('task:' + self.id);
+    multi.exec(function(error) {
+      done(error);
+    });
+  });
+};
 
 var item  = new Task('I have things to do');
 item.addTag('sports');
 item.addTag('news');
 item.save(function() {
   console.log('This item was SAVED yo!');
-});
-var item2 = new Task();
-item2.load(1, function(error) {
-  if (error) {
-    console.log(error);
-  }
-  console.log(item2);
+  var item2 = new Task();
+  item2.load(item.id, function(error) {
+    if (error) {
+      console.log(error);
+    }
+    console.log(item2);
+    item2.delete(function(error) {
+      if (error) {
+        console.log(error);
+      }
+      console.log('item was deleted');
+    });
+  });
 });
