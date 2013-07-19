@@ -10,6 +10,9 @@
   "author": "Howard Tyson",
   "license": "BSD",
   "dependencies": {
-    "redis": "~0.8.4"
+    "redis": "~0.8.4",
+    "should": "~1.2.2",
+    "mocha": "~1.12.0",
+    "fakeredis": "~0.1.1"
   }
 }
