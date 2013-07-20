@@ -2,6 +2,10 @@
 
 A simple node.js TODO list application for demo and training purposes.
 
+## Running Tests
+
+Run `npm test`. For more advanced configuration run mocha directy by running `node_modules/mocha/bin/mocha` from the root of the repository.
+
 ## Redis Schema
 
   - tasks - a set containing the ids of all tasks
