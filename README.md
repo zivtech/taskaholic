@@ -1,5 +1,7 @@
 # Taskaholic
 
+[![Build Status](https://travis-ci.org/zivtech/taskaholic.png?branch=master)](https://travis-ci.org/zivtech/taskaholic)
+
 A simple node.js TODO list application for demo and training purposes.
 
 ## Running Tests
