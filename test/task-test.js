@@ -5,10 +5,10 @@ var Task = require('../lib/Task');
 var client = null;
 var todoItem = null;
 
+Task.client = client = fakeredis.createClient();
 describe('Task', function() {
   describe('#constructor', function() {
     it ('should set the description property.', function() {
-      client = fakeredis.createClient();
       todoItem = new Task('This is my test item', client);
       todoItem.description.should.equal('This is my test item');
     });
@@ -99,10 +99,10 @@ describe('Task', function() {
         if (error) return done(error);
         task2.save(function(error) {
           Task.listTasks([], function(error, tasks) {
-            tasks.should.be.not.empty
-            tasks[0].description.should.equal('Descripton 1')
-            tasks[1].description.should.equal('Descripton 2')
-            done(error)
+            tasks.should.be.not.empty;
+            tasks[0].description.should.equal('Descripton 1');
+            tasks[1].description.should.equal('Descripton 2');
+            done(error);
           });
         });
       });
