@@ -108,4 +108,17 @@ describe('Task', function() {
       });
     });
   });
+  describe('#listTaskIds', function() {
+    // before(function(done) {
+    //   client.flushdb(done);
+    // });
+    it('should receive a list of the existing tax ids', function(done) {
+      Task.listTaskIds(function(error, ids) {
+        ids.length.should.equal(2);
+        parseInt(ids[0]).should.equal(2);
+        parseInt(ids[1]).should.equal(3);
+        done(error);
+      });
+    });
+  });
 });
