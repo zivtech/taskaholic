@@ -13,7 +13,7 @@ describe('Task', function() {
       todoItem.description.should.equal('This is my test item');
     });
   });
-  describe('#addTag', function(done) {
+  describe('#addTag', function() {
     it ('should add an item to the internal array of tags', function() {
       todoItem.tags.should.be.empty;
       todoItem.addTag('sports');
@@ -23,7 +23,7 @@ describe('Task', function() {
       todoItem.tags.should.have.length(2);
     });
   });
-  describe('#save', function(done) {
+  describe('#save', function() {
     it ('should save without an error', function(done) {
       todoItem.save(done);
     });
@@ -52,7 +52,7 @@ describe('Task', function() {
       });
     });
   });
-  describe('#load', function(done) {
+  describe('#load', function() {
     it ('should retrieve an object with the data persisted during save', function(done) {
       var loadedItem = new Task(null, client);
       loadedItem.load(todoItem.id, function(error) {
@@ -65,7 +65,7 @@ describe('Task', function() {
       });
     });
   });
-  describe('#delete', function(done) {
+  describe('#delete', function() {
     it ('should successfully remove the item from redis', function(done) {
       todoItem.delete(function(error) {
         should.not.exist(error);
