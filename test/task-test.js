@@ -1,15 +1,19 @@
 var should = require('should');
 var fakeredis = require('fakeredis');
 var Task = require('../lib/Task');
+var async = require('async');
 
 var client = null;
 var todoItem = null;
 
 Task.client = client = fakeredis.createClient();
+// We don't bother to test race conditions so there's no need to simulate them.
+fakeredis.fast = true;
+
 describe('Task', function() {
   describe('#constructor', function() {
     it ('should set the description property.', function() {
-      todoItem = new Task('This is my test item', client);
+      todoItem = new Task('This is my test item');
       todoItem.description.should.equal('This is my test item');
     });
   });
@@ -54,7 +58,7 @@ describe('Task', function() {
   });
   describe('#load', function() {
     it ('should retrieve an object with the data persisted during save', function(done) {
-      var loadedItem = new Task(null, client);
+      var loadedItem = new Task(null);
       loadedItem.load(todoItem.id, function(error) {
         loadedItem.id.should.equal(todoItem.id);
         loadedItem.description.should.equal(todoItem.description);
@@ -93,8 +97,8 @@ describe('Task', function() {
       });
     });
     it ('should return an array of fully loaded tasks if there are tasks', function(done) {
-      var task1 = new Task('Descripton 1', client);
-      var task2 = new Task('Descripton 2', client);
+      var task1 = new Task('Descripton 1');
+      var task2 = new Task('Descripton 2');
       task1.save(function(error) {
         if (error) return done(error);
         task2.save(function(error) {
