@@ -133,4 +133,21 @@ describe('Task', function() {
       });
     });
   });
+  describe('static#load', function() {
+    it ('should receive an error when loading a nonexisting task', function(done) {
+      Task.load(999, function(error, task) {
+        should.exist(error);
+        error.message.should.equal('Task id 999 not found.');
+        should.not.exist(task);
+        done();
+      });
+    });
+    it ('should load a valid order', function(done) {
+      Task.load(2, function(error, loadedTask) {
+        loadedTask.description.should.equal('Description 1');
+        loadedTask.tags.should.be.empty;
+        done(error);
+      });
+    });
+  })
 });
