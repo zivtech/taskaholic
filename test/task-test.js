@@ -57,6 +57,14 @@ describe('Task', function() {
     });
   });
   describe('#load', function() {
+    it ('should receive an error when trying to load an object with a bad id', function(done) {
+      var failedLoadItem = new Task();
+      failedLoadItem.load(999, function(error) {
+        should.exist(error);
+        error.message.should.equal('Task id 999 not found.');
+        done();
+      })
+    });
     it ('should retrieve an object with the data persisted during save', function(done) {
       var loadedItem = new Task(null);
       loadedItem.load(todoItem.id, function(error) {
