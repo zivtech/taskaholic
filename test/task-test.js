@@ -105,15 +105,15 @@ describe('Task', function() {
       });
     });
     it ('should return an array of fully loaded tasks if there are tasks', function(done) {
-      var task1 = new Task('Descripton 1');
-      var task2 = new Task('Descripton 2');
+      var task1 = new Task('Description 1');
+      var task2 = new Task('Description 2');
       task1.save(function(error) {
         if (error) return done(error);
         task2.save(function(error) {
           Task.listTasks([], function(error, tasks) {
             tasks.should.be.not.empty;
-            tasks[0].description.should.equal('Descripton 1');
-            tasks[1].description.should.equal('Descripton 2');
+            tasks[0].description.should.equal('Description 1');
+            tasks[1].description.should.equal('Description 2');
             done(error);
           });
         });
